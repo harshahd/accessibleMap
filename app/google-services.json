@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "94671021006",
+    "firebase_url": "https://accessible-map.firebaseio.com",
+    "project_id": "accessible-map",
+    "storage_bucket": "accessible-map.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94671021006:android:7a2bb5d216e0ece501819f",
+        "android_client_info": {
+          "package_name": "com.hackathon.accessiblemap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94671021006-9bgt9i3s9qkv3kmt333uid6q36dog62s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDihXNSep5KNBStGjZIaESQyTez0VJPS3g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94671021006-9bgt9i3s9qkv3kmt333uid6q36dog62s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
