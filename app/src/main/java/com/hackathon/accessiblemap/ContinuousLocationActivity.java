@@ -25,8 +25,10 @@ import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Result;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.common.api.internal.GoogleServices;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -98,10 +100,27 @@ gClient=new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnec
             return;
         }
 
+        LocationCallback lc=new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult==null)
+                    return;
+                Location location=locationResult.getLastLocation();
+
+            }
+        };
 LocationRequest lRequest=LocationRequest.create();
         lRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-        lRequest.setNumUpdates(1);
-        lRequest.setInterval(0);
+                lRequest.setInterval(5000);
+        LocationServices.FusedLocationApi.requestLocationUpdates(gClient, lRequest, new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+            }
+        })
+        /*
         LocationServices.FusedLocationApi.requestLocationUpdates(gClient, lRequest, new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -122,6 +141,8 @@ LocationRequest lRequest=LocationRequest.create();
                 }
                             }
         });
+
+         */
     }
 
 

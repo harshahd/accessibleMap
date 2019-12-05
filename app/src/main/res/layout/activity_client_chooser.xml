@@ -7,16 +7,25 @@
     android:orientation="vertical"
     tools:context=".ClientChooserActivity">
 
-    <RadioButton
-        android:id="@+id/sender"
+    <RadioGroup
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Sender"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <RadioButton
-        android:id="@+id/receiver"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Receiver"/>
+        <RadioButton
+            android:id="@+id/sender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sender"/>
+
+        <RadioButton
+            android:id="@+id/receiver"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Receiver"/>
+
+
+
+    </RadioGroup>
 
 </LinearLayout>
