@@ -58,6 +58,7 @@ private FirebaseDatabase db;
 private String[] permissions={Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
 private DatabaseReference reference;
 private LocationCallback lc;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,22 +85,10 @@ gClient=new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnec
                 Location location=locationResult.getLastLocation();
                 if (location!=null)
                 {
-                    Geocoder geocoder=new Geocoder(ContinuousLocationActivity.this, Locale.getDefault());
-                    try
-                    {
-                        List<Address> addresses=geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
-                        Address address=addresses.get(0);
-                        String exactAddress=address.getAddressLine(0);
-                        if (exactAddress!=null)
-                            reference.setValue("addresses");
-                        reference.child("addresses").setValue(exactAddress);
-                        Toast.makeText(ContinuousLocationActivity.this, "Kept address in database.", Toast.LENGTH_SHORT).show();
-                    }
-                    catch (Exception e)
-                    {
-                        Toast.makeText(ContinuousLocationActivity.this, "Cant fetch location. sorry.", Toast.LENGTH_SHORT).show();
-                    }
-
+                                        reference.setValue("Location");
+                    reference.child("lat").setValue(String.valueOf(location.getLatitude()));
+                    reference.child("lng").setValue(String.valueOf(location.getLongitude()));
+                    Toast.makeText(ContinuousLocationActivity.this, "Kept address in database.", Toast.LENGTH_SHORT).show();
                 }
             }
         };

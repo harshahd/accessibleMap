@@ -7,6 +7,19 @@
     android:orientation="vertical"
     tools:context=".ReceiverActivity">
 
+    <TextView
+        android:id="@+id/destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    android:text="No location."/>
+
+    <TextView
+        android:id="@+id/distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Distance not measured."/>
+
+
     <Button
         android:id="@+id/experiment"
         android:layout_width="wrap_content"
