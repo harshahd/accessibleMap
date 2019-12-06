@@ -12,6 +12,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -56,6 +57,7 @@ private EditText email,password;
 private FirebaseDatabase db;
 private String[] permissions={Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION};
 private DatabaseReference reference;
+private LocationCallback lc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +75,34 @@ gClient=new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnec
             public void onConnectionSuspended(int i) {
             }
         }).build();
+        lc=new LocationCallback()
+        {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                if (locationResult==null)
+                    return;
+                Location location=locationResult.getLastLocation();
+                if (location!=null)
+                {
+                    Geocoder geocoder=new Geocoder(ContinuousLocationActivity.this, Locale.getDefault());
+                    try
+                    {
+                        List<Address> addresses=geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                        Address address=addresses.get(0);
+                        String exactAddress=address.getAddressLine(0);
+                        if (exactAddress!=null)
+                            reference.setValue("addresses");
+                        reference.child("addresses").setValue(exactAddress);
+                        Toast.makeText(ContinuousLocationActivity.this, "Kept address in database.", Toast.LENGTH_SHORT).show();
+                    }
+                    catch (Exception e)
+                    {
+                        Toast.makeText(ContinuousLocationActivity.this, "Cant fetch location. sorry.", Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        };
 
 
 
@@ -89,8 +119,9 @@ gClient=new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnec
     @Override
     protected void onStop() {
         super.onStop();
+        LocationServices.FusedLocationApi.removeLocationUpdates(gClient, lc);
          gClient.disconnect();
-    }
+             }
 
     public void retrieveLocation(View view) {
         if (ContextCompat.checkSelfPermission(this,permissions[0])!=PackageManager.PERMISSION_GRANTED)
@@ -99,27 +130,11 @@ gClient=new GoogleApiClient.Builder(this).addApi(LocationServices.API).addConnec
             requestPermissions(permissions,0);
             return;
         }
-
-        LocationCallback lc=new LocationCallback()
-        {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                if (locationResult==null)
-                    return;
-                Location location=locationResult.getLastLocation();
-
-            }
-        };
 LocationRequest lRequest=LocationRequest.create();
         lRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                lRequest.setInterval(5000);
-        LocationServices.FusedLocationApi.requestLocationUpdates(gClient, lRequest, new LocationCallback()
-        {
-            @Override
-            public void onLocationResult(LocationResult locationResult) {
-                super.onLocationResult(locationResult);
-            }
-        })
+lRequest.setFastestInterval(1000*5);
+lRequest.setInterval(1000);
+                                LocationServices.FusedLocationApi.requestLocationUpdates(gClient, lRequest, lc, getMainLooper());
         /*
         LocationServices.FusedLocationApi.requestLocationUpdates(gClient, lRequest, new LocationListener() {
             @Override
@@ -150,7 +165,5 @@ LocationRequest lRequest=LocationRequest.create();
         DatabaseReference reference=db.getReference();
         reference.getRoot().removeValue();
     }
-
-
 }
 

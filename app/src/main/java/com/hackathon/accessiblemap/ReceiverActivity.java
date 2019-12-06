@@ -30,7 +30,8 @@ public class ReceiverActivity extends AppCompatActivity {
 reference.addValueEventListener(new ValueEventListener() {
     @Override
     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-        Toast.makeText(ReceiverActivity.this, "Location: "+dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(ReceiverActivity.this, "Location: "+dataSnapshot.getValue().toString(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
