@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ReceiverActivity">
-
-    <TextView
-        android:id="@+id/destination"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-    android:text="No location."/>
-
-    <TextView
-        android:id="@+id/distance"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Distance not measured."/>
-
-
-    <Button
-        android:id="@+id/experiment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="retrieveLocation"
-        android:text="Retrieve location" />
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent">
+    <TextView android:id="@+id/destination" android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/distance" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Distance not measured."/>
+    <TextView android:id="@+id/keyView" android:layout_width="match_parent" android:layout_height="wrap_content" android:textAlignment="center"/>
 </LinearLayout>

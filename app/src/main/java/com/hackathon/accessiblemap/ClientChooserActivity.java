@@ -1,40 +1,39 @@
 package com.hackathon.accessiblemap;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class ClientChooserActivity extends AppCompatActivity {
-private RadioButton sender,receiver;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    /* access modifiers changed from: private */
+    public RadioButton receiver;
+    /* access modifiers changed from: private */
+    public RadioButton sender;
+
+    /* access modifiers changed from: protected */
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_chooser);
-        sender=findViewById(R.id.sender);
-        receiver=findViewById(R.id.receiver);
-sender.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener()
-{
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        if (isChecked) {
-            Intent i = new Intent(ClientChooserActivity.this, ContinuousLocationActivity.class);
-            startActivity(i);
-        }
-    }
-});
-        receiver.setOnCheckedChangeListener(new RadioButton.OnCheckedChangeListener()
-        {
-            @Override
+        this.sender = (RadioButton) findViewById(R.id.sender);
+        this.receiver = (RadioButton) findViewById(R.id.receiver);
+        this.sender.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Intent i = new Intent(ClientChooserActivity.this, ReceiverActivity.class);
-                    startActivity(i);
+                    ClientChooserActivity.this.sender.announceForAccessibility("Redirecting to sender. Please wait...");
+                    ClientChooserActivity.this.startActivity(new Intent(ClientChooserActivity.this, SenderOtpActivity.class));
+                }
+            }
+        });
+        this.receiver.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    ClientChooserActivity.this.receiver.announceForAccessibility("Redirecting to receiver. Please wait...");
+                    ClientChooserActivity.this.startActivity(new Intent(ClientChooserActivity.this, ReceiveOtpActivity.class));
                 }
             }
         });
     }
 }
-
